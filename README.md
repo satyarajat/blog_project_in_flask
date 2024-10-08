@@ -1,0 +1,1 @@
+# blog_project_in_flask
