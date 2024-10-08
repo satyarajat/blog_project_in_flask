@@ -1,0 +1,32 @@
+{% extends "main.html" %}
+
+{% block title %}
+<title>Home</title>
+{% endblock title %}
+
+
+{% block content %}
+<h2 class="text-center">Home Page</h2>
+
+    <div class="my-4">
+        {% if blogs %}
+            <div class="row">
+                {% for blog in blogs %}
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ blog.title }}</h5>
+                            <h6 class="card-subtitle text-muted">By {{ blog.author }} on {{ blog.pub_date.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+                            <p class="card-text">{{ blog.content[:150] }}...</p> <!-- Show a short preview -->
+                            <a href="{{ url_for('detail_blog', id=blog.id) }}" class="btn btn-primary">Read more</a> <!-- Add link to full blog if necessary -->
+                        </div>  
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>There is no any blogs yet.</p>
+        {% endif %}
+    </div>
+
+{% endblock content %}

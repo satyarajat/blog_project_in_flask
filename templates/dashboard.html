@@ -1,0 +1,50 @@
+{% extends "main.html" %}
+
+{% block title %}
+<title>Dashboard</title>
+{% endblock title %}
+
+{% block content %}
+<h2 class="text-center">Dashboard Page</h2>
+<a class="btn btn-primary mb-2" href="{{ url_for('create_blog') }}">Create</a>
+
+<!-- Flash messages for success/warning info -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<!-- Display the user's blog posts -->
+<div class="container mt-4">
+    <h3>Your Blog Posts</h3>
+    {% if blogs %}
+    <div class="row">
+        {% for blog in blogs %}
+        <div class="col-md-4 mb-4"> 
+            <div class="card mb-4 h-100"> <!-- Added h-100 to ensure full height -->
+                {% if blog.image %}
+                <img src="{{ url_for('static', filename='uploads/' + blog.image) }}" alt="Blog Image" class="card-img-top img-thumbnail" style="width:100%; height:250px;">
+                {% endif %}
+                <div class="card-body pb-0"> 
+                    <h5 class="card-title">{{ blog.title }}</h5>
+                    <h6 class="card-subtitle text-muted">By {{ blog.author }} on {{ blog.pub_date.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+                    <p class="card-text">{{ blog.content[:150] }}...<a href="{{ url_for('detail_blog', id=blog.id) }}" class="card-link">Read more</a></p>
+                    <a href="{{ url_for('edit_blog', id=blog.id) }}" class="btn btn-info mt-3">Edit</a>
+                    <a href="{{ url_for('delete_blog', id=blog.id) }}" class="btn btn-danger mt-3">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>You haven't written any blogs yet.</p>
+    {% endif %}
+</div>
+
+{% endblock content %}

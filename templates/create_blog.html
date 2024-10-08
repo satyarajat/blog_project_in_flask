@@ -1,0 +1,42 @@
+{% extends "main.html" %}
+
+{% block title %}
+<title>Blog</title>
+{% endblock title %}
+
+
+{% block content %}
+<h2 class="text-center">Blog Page</h2>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+    <form method="POST" class="my-4" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name='title' placeholder="Title">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea class="form-control" id="content" name='content' rows="3" placeholder="Type here..."></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="image">Upload Image</label>
+            <input type="file" id="image" name="image" accept="image/*">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Post</button>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+      </form>
+
+
+{% endblock content %}

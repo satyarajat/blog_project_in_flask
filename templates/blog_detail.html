@@ -1,0 +1,29 @@
+{% extends "main.html" %}
+
+{% block title %}
+<title>BlogDetail</title>
+{% endblock title %}
+
+
+{% block content %}
+    <h2 class="text-center">Blog Detial Page</h2>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Back</a>
+
+    <div class="my-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    {% if blog.image %}
+                    <img src="{{ url_for('static', filename='uploads/' + blog.image) }}" alt="Blog Image" class="card-img-top img-thumbnail">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ blog.title }}</h5>
+                        <h6 class="card-subtitle text-muted">By {{ blog.author }} on {{ blog.pub_date.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+                        <p class="card-text">{{ blog.content }}...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
